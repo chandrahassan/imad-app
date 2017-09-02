@@ -53,11 +53,12 @@ function createTemplate (data){
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-function hash(input){
-    var hashed = crypto.pbkdf2Sync(input, salt);
+function hash(input, salt){
+    var hashed = crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
+    return hashed;
 }
 app.get('/hash/:input',function(req,res){
-    var hashedString = hash(request.params.input);
+    var hashedString = hash(request.params.input, salt);
     res.send(hashedString);
 });
 
