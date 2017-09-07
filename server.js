@@ -76,6 +76,17 @@ app.post('/create-user',function (req, res){
     });
 });
 
+app.post('/login',function(req,res){
+    var username = req.body.username;
+    var password = req.body.password;
+    pool.query('INSERT INTO "user" (username, password) VALUEs($1,$2)',[username,dbString],function(err,result){
+    if(err){
+        res.status(500).send(err.toString());
+    }else{
+         res.send('User successfully created:' + username);
+         }    
+    }); 
+});
 var pool = new Pool(config);
 app.get('/test-db',function(req,res){
     pool.query('SELECT * FROM test', function (err,result){
