@@ -79,7 +79,7 @@ app.post('/create-user',function (req, res){
 app.post('/login',function(req,res){
     var username = req.body.username;
     var password = req.body.password;
-    pool.query('INSERT INTO "user" (username, password) VALUEs($1,$2)',[username,dbString],function(err,result){
+    pool.query('SELECT * from "user" username=$1',[username],function(err,result){
     if(err){
         res.status(500).send(err.toString());
     }else{
